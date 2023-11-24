@@ -24,43 +24,8 @@ export default function SetEmployee(){
          setTimeout(() =>{
           (async () => await fetchEmployees())()
          }, 2000)
-    }, [setFetchError])
+    }, [setFetchError]);
 
-   /* async function updateEmployee(id, newName, newRole, newImg){
-     /* const updatedEmployees = employee.map((employee) => {
-        if(id === employee.id){
-          return{...employee, name: newName, role:newRole, img:newImg};
-        }
-        return employee;
-      });
-      setEmployee(updatedEmployees);*/
-     // const updatedEmployee = { id, name: newName, role: newRole, img: newImg };
-
-      /*try {
-        const response = await fetch(API_URL, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id, name: newName, role: newRole, img: newImg }),
-        });
-    
-        if (!response.ok) {
-          throw new Error('Failed to update employee');
-        }
-    
-        // Update the local state only if the server update was successful
-        const updatedEmployees = employee.map((emp) =>
-          emp.id === id ? { ...emp, name: newName, role: newRole, img: newImg } : emp
-        );
-         
-        const updateEmployee = await response.json();
-        setEmployee(updatedEmployees);
-      } catch (error) {
-        console.error('Error updating employee:', error);
-        // Handle error (display an error message or perform any necessary actions)
-      }
-    }*/
     async function updateEmployee(id, newName, newRole, newImg) {
       try {
         const response = await fetch(`${API_URL}/${id}`, {
