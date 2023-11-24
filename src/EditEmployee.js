@@ -12,9 +12,16 @@ function EditEmployee(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleDelete = () => {
+    props.deleteEmployee(props.id, name, role, img);
+    handleClose(); 
+  };
+
   return (
     <>
-     <button className="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2" onClick={handleShow}>Edit</button>  
+     <button className="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2" onClick={handleShow}>Edit</button> 
+
+     <button className="px-4 py-1 text-sm bg-gray-600 text-white font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-gray-500 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2" onClick={handleDelete}>Delete</button>  
 
       <Modal
         show={show}
@@ -31,44 +38,43 @@ function EditEmployee(props) {
           handleClose();
           props.updateEmployee(props.id, name, role, img);
         }}
-         id="edit" class="w-full max-w-sm">
-  <div class="md:flex md:items-center mb-6">
-    <div class="md:w-1/3">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="name">
+         id="edit" className="w-full max-w-sm">
+  <div className="md:flex md:items-center mb-6">
+    <div className="md:w-1/3">
+      <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
         Full Name
       </label>
     </div>
     <div className="md:w-2/3">
-      <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="name" type="text" value={name}
+      <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="name" type="text" value={name} placeholder="Full Name"
       onChange={(e) => {
         setName(e.target.value)
       }}
       />
     </div>
   </div>
-  <div class="md:flex md:items-center mb-6">
-    <div class="md:w-1/3">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="role">
+  <div className="md:flex md:items-center mb-6">
+    <div className="md:w-1/3">
+      <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
         Role
       </label>
     </div>
     <div className="md:w-2/3">
-      <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="role" type="text" value={role}
+      <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="role" type="text" value={role} placeholder="React Dev"
       onChange={(e) => {
         setRole(e.target.value)
       }}
       />
     </div>
   </div>
-  <div class="md:flex md:items-center mb-6">
-    <div class="md:w-1/3">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="Image">
+  <div className="md:flex md:items-center mb-6">
+    <div className="md:w-1/3">
+      <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
         Image
       </label>
     </div>
     <div className="md:w-2/3">
-      <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="Image" type="url" value={img}
-      onChange={(e) => {
+      <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="Image" type="text" value={img} placeholder="https//Image-url.com"       onChange={(e) => {
         setImg(e.target.value) 
       }}
       />

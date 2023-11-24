@@ -1,0 +1,34 @@
+{
+  "employee": [
+    {
+      "id": 2,
+      "name": "James",
+      "role": "CEO",
+      "img": "https://images.pexels.com/photos/3831645/pexels-photo-3831645.jpeg"
+    },
+    {
+      "id": 7,
+      "name": "James",
+      "role": "Manager",
+      "img": "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg"
+    },
+    {
+      "id": 4,
+      "name": "Jane",
+      "role": "Team Leader",
+      "img": "https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg"
+    },
+    {
+      "name": "paschal",
+      "role": "React Dev",
+      "img": "https://images.pexels.com/photos/3831645/pexels-photo-3831645.jpeg",
+      "id": 8
+    },
+    {
+      "name": "paschal",
+      "role": "Mobile Dev",
+      "img": "https://images.pexels.com/photos/2225298/pexels-photo-2225298.jpeg",
+      "id": 9
+    }
+  ]
+}
