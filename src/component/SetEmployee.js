@@ -2,114 +2,120 @@ import Employee from '../component/Employee';
 import AddEmployee from '../component/AddEmployee';
 import {useState, useEffect} from 'react';
 
-export default function SetEmployee(){
-  const API_URL = 'http://localhost:3500/employee';
+export default function SetEmployee() {
+  const API_URL = 'https://6561bc95dcd355c083241f35.mockapi.io/employee';
   const showEmployee = true;
   const [employee, setEmployee] = useState([]);
   const [ setFetchError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-    
-    useEffect(() =>{
-         const fetchEmployees = async () => {
-          try{
-            const response = await fetch(API_URL);
-            const listEmployee = await response.json();
-            setEmployee(listEmployee);
-          } catch (err){
-            setFetchError(err.message)
-          } finally{
-            setIsLoading(false);
-          }
-         }
-         setTimeout(() =>{
-          (async () => await fetchEmployees())()
-         }, 2000)
-    }, [setFetchError]);
 
-    async function updateEmployee(id, newName, newRole, newImg) {
+  useEffect(() => {
+    const fetchEmployees = async () => {
       try {
-        const response = await fetch(`${API_URL}/${id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name: newName, role: newRole, img: newImg }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to update employee');
-        }
-  
-        const updatedEmployees = employee.map((emp) =>
-          emp.id === id ? { ...emp, name: newName, role: newRole, img: newImg } : emp
-        );
-  
-        setEmployee(updatedEmployees);
-      } catch (error) {
-        console.error('Error updating employee:', error);
-        // Handle the error (e.g., show an error message to the user)
+        const response = await fetch(API_URL);
+        const listEmployee = await response.json();
+        setEmployee(listEmployee);
+      } catch (err) {
+        setFetchError(err.message);
+      } finally {
+        setIsLoading(false);
       }
-    }
-    
-    async function deleteEmployee(idToDelete) {
-      try {
-        const response = await fetch(`${API_URL}/${idToDelete}`, {
-          method: 'DELETE',
-        });
+    };
+
+    setTimeout(() => {
+      (async () => await fetchEmployees())();
+    }, 2000);
+  }, [setFetchError]);
+
+  async function updateEmployee(id, newName, newRole, newImg) {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newName, role: newRole, img: newImg }),
+      });
   
-        if (!response.ok) {
-          throw new Error('Failed to delete employee');
-        }
+      console.log('Response status:', response.status); // Log the response status
   
-        const updatedEmployees = employee.filter((emp) => emp.id !== idToDelete);
-        setEmployee(updatedEmployees);
-      } catch (error) {
-        console.error('Error deleting employee:', error);
+      if (!response.ok) {
+        throw new Error('Failed to update employee');
       }
+  
+      const updatedEmployees = employee.map((emp) =>
+        emp.id === id ? { ...emp, name: newName, role: newRole, img: newImg } : emp
+      );
+  
+      console.log('Updated Employees:', updatedEmployees); // Log the updated employees
+  
+      setEmployee(updatedEmployees); // Assuming setEmployee is a state update function
+    } catch (error) {
+      console.error('Error updating employee:', error);
+      // Handle the error (e.g., show an error message to the user)
     }
+  }
   
-       
-    async function newEmployee(id, name, role, img){
-      try {
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name, role, img }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to add employee');
-        }
-  
-        const newEmployee = await response.json();
-        setEmployee([...employee, newEmployee]);
-      } catch (error) {
-        setFetchError(error.message);
+
+  async function deleteEmployee(idToDelete) {
+    try {
+      const response = await fetch(`${API_URL}/${idToDelete}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete employee');
       }
+
+      const updatedEmployees = employee.filter((emp) => emp.id !== idToDelete);
+      setEmployee(updatedEmployees);
+    } catch (error) {
+      console.error('Error deleting employee:', error);
     }
-    return (
-      <div>
-        {showEmployee ? (
-          <>
-            {isLoading && <p>Loading Employees....</p>}
-            {!isLoading && (
-              <>
-                <div className="flex flex-wrap">
-                  {employee.map((employee) => (
-                    <Employee
-                      key={employee.id}
-                      id={employee.id}
-                      name={employee.name}
-                      role={employee.role}
-                      img={employee.img}
-                      updateEmployee={updateEmployee}
-                      deleteEmployee={deleteEmployee}
-                    />
-                  ))}
-                </div>
-                <AddEmployee newEmployee={newEmployee} />
+  }
+
+  async function newEmployee(id, name, role, img) {
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, role, img }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add employee');
+      }
+
+      const newEmployee = await response.json();
+      setEmployee([...employee, newEmployee]);
+    } catch (error) {
+      setFetchError(error.message);
+    }
+  }
+
+  return (
+    <div>
+      {showEmployee ? (
+        <>
+          {isLoading && <p>Loading Employees....</p>}
+          {!isLoading && (
+            <>
+              <div className="flex flex-wrap">
+                {employee.map((employee) => (
+                  <Employee
+                    key={employee.id}
+                    id={employee.id}
+                    name={employee.name}
+                    role={employee.role}
+                    img={employee.img}
+                    updateEmployee={updateEmployee}
+                    deleteEmployee={deleteEmployee}
+                  />
+                ))}
+              </div>
+              <AddEmployee newEmployee={newEmployee} />
             </>
           )}
         </>
